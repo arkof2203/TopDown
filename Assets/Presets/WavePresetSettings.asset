@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f021085ba964494879c30f28bc888d3, type: 3}
+  m_Name: WavePresetSettings
+  m_EditorClassIdentifier: 
+  _sea:
+  - StartDelay: 5
+    Packs:
+    - Prefab: {fileID: 8880073602133889399, guid: 13898f0cc68bcee408f49417ba1996fb, type: 3}
+      Preset: {fileID: 11400000, guid: 35ef1a118ff67a642875afdf3a870522, type: 2}
+      Count: 10
+      SpawnDelay: 0.5
+  - StartDelay: 20
+    Packs:
+    - Prefab: {fileID: 8880073602133889399, guid: 13898f0cc68bcee408f49417ba1996fb, type: 3}
+      Preset: {fileID: 11400000, guid: 35ef1a118ff67a642875afdf3a870522, type: 2}
+      Count: 20
+      SpawnDelay: 0.5
