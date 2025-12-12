@@ -28,13 +28,13 @@ namespace Netologia.TowerDefence
 		public float CurrentHealth { get; set; }
         public bool IsDead => CurrentHealth <= 0;
         public UnitVisual Visual { get; private set; }
-		
-		public float MoveSpeed
+
+        public float MoveSpeed
 			=> _iceEffects.Count > 0
 				? Mathf.Pow(Constants.IceDebuffMoveSpeedMult, _iceEffects.Count) * Stats.MoveSpeed
 				: Stats.MoveSpeed;
 
-		public int CountEffect(ElementalType type)
+        public int CountEffect(ElementalType type)
 			=> type switch
 			{
 				ElementalType.Fire => _fireEffects.Count,
@@ -82,7 +82,15 @@ namespace Netologia.TowerDefence
 			if(time - list[^1] >= delay) list.RemoveAt(list.Count - 1);
 		}
 
-		public void Respawn(UnitPresetSettings.Stats stats, Vector3 position)
+        public void FlipByDirection(float moveX)
+        {
+            if (moveX == 0) return;
+            float yRotation = moveX < 0 ? 0f : -180f;
+            transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
+
+
+        public void Respawn(UnitPresetSettings.Stats stats, Vector3 position)
 		{
 			(Stats, CurrentHealth, PathIndex) = (stats, stats.Health, 0);
 			transform.position = position;

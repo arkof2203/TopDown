@@ -60,6 +60,9 @@ namespace Netologia.Systems
 
                     Vector3 target = _path[unit.PathIndex];
 
+                    float directionX = target.x - unit.transform.position.x;
+                    unit.FlipByDirection(directionX);
+
                     unit.transform.position = Vector3.MoveTowards(
                         unit.transform.position,
                         target,
