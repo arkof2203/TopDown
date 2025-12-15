@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CommonUnitPreset
   m_EditorClassIdentifier: 
   <Preset>k__BackingField:
-    Health: 15
+    Health: 10
     MoveSpeed: 0.5
     Cost: 1
