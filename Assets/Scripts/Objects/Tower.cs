@@ -113,10 +113,14 @@ namespace Netologia.TowerDefence
 			_hasSound = AttackSound != null;
 		}
 
-		private void UpdateRangeBackground()
-			=> _rangeBack.transform.localScale = Vector3.one * 0.67f * Range;
-		
-		private void OnDrawGizmos()
+        private void UpdateRangeBackground()
+        {
+            if (_rangeBack == null) return;
+            _rangeBack.transform.localScale = Vector3.one * 0.67f * Range;
+        }
+
+
+        private void OnDrawGizmos()
 		{
 			if(_level < 0 || _level >= Progress.Length) return;
 

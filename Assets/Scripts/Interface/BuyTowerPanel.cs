@@ -12,41 +12,60 @@ namespace Netologia.TowerDefence.Interface
 		private TowerButton _fireTowerButton;
 		[SerializeField]
 		private TowerButton _iceTowerButton;
+        [SerializeField]
+        private TowerButton _barrackButton;
 
-		public event Action<ElementalType> OnBuyTowerHandler;
+        public event Action<ElementalType> OnBuyTowerHandler;
+        public event Action OnBuyBarrackHandler;
 
-		public void SetTowerParams(Tower[] towers)
-		{//todo crutch work
-			for (int i = 0; i < towers.Length; i++)
-			{
-				var tower = towers[i];
-				var conf = tower.AttackElemental switch
-				{
-					ElementalType.Physic => _physicTowerButton,
-					ElementalType.Fire => _fireTowerButton,
-					ElementalType.Ice => _iceTowerButton,
-					_ => throw new ArgumentOutOfRangeException()
-				};
+        public void SetTowerParams(Tower[] towers)
+        {
+            for (int i = 0; i < towers.Length; i++)
+            {
+                var tower = towers[i];
 
-				conf.Cost = tower.Progress[0].Cost;
-				conf.Description = string.Empty;
-				conf.Name = tower.name;
-			}
-		}
-		
-		private void Awake()
+                TowerButton conf = null;
+                switch (tower.AttackElemental)
+                {
+                    case ElementalType.Physic: conf = _physicTowerButton; break;
+                    case ElementalType.Fire: conf = _fireTowerButton; break;
+                    case ElementalType.Ice: conf = _iceTowerButton; break;
+                    default:
+                        Debug.LogWarning($"[BuyTowerPanel] Unsupported tower element '{tower.AttackElemental}' for {tower.name}. Skipped.");
+                        continue; // <-- ВАЖНО: не падаем
+                }
+
+                conf.Cost = tower.Progress[0].Cost;
+                conf.Description = string.Empty;
+                conf.Name = tower.name;
+            }
+        }
+
+
+        public void SetBarrackParams(Tower barrackPrefab)
+        {
+            if (barrackPrefab == null) return;
+
+            _barrackButton.Cost = barrackPrefab.Progress[0].Cost;
+            _barrackButton.Description = string.Empty;
+            _barrackButton.Name = barrackPrefab.name;
+        }
+
+        private void Awake()
 		{
 			_physicTowerButton.Button.onClick.AddListener(BuyPhysic);
 			_fireTowerButton.Button.onClick.AddListener(BuyFire);
 			_iceTowerButton.Button.onClick.AddListener(BuyIce);
-		}
+            _barrackButton.Button.onClick.AddListener(BuyBarrack);
+        }
 
 		private void OnDestroy()
 		{
 			_physicTowerButton.Button.onClick.RemoveListener(BuyPhysic);
 			_fireTowerButton.Button.onClick.RemoveListener(BuyFire);
 			_iceTowerButton.Button.onClick.RemoveListener(BuyIce);
-		}
+            _barrackButton.Button.onClick.RemoveListener(BuyBarrack);
+        }
 
 		private void BuyPhysic()
 			=> OnBuyTowerHandler?.Invoke(ElementalType.Physic);
@@ -54,5 +73,7 @@ namespace Netologia.TowerDefence.Interface
 			=> OnBuyTowerHandler?.Invoke(ElementalType.Fire);
 		private void BuyIce()
 			=> OnBuyTowerHandler?.Invoke(ElementalType.Ice);
-	}
+        private void BuyBarrack()
+            => OnBuyBarrackHandler?.Invoke();
+    }
 }

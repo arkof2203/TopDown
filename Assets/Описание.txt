@@ -1,5 +1,7 @@
-Ассеты  брал вот от сюда
-https://free-game-assets.itch.io/free-fields-tileset-pixel-art-for-tower-defense
-https://free-game-assets.itch.io/free-archer-towers-pixel-art-for-tower-defense
-https://free-game-assets.itch.io/free-magic-and-traps-top-down-pixel-art-asset
-https://free-game-assets.itch.io/free-field-enemies-pixel-art-for-tower-defense
+1. Карту я заменил на спрайты с этого сайта, тут же и деревья и кусты и тропа - https://free-game-assets.itch.io/free-fields-tileset-pixel-art-for-tower-defense
+2. Башни я заменил на спрайты вот от сюда - https://foozlecc.itch.io/spire-tower-pack-1
+3. Барак взят спрайт с этого сайта - https://free-game-assets.itch.io/free-archer-towers-pixel-art-for-tower-defense
+4. Лучники тоже от сюда - https://free-game-assets.itch.io/free-archer-towers-pixel-art-for-tower-defense
+5. Добавил вступление в игру, маленький сюжет начальной игры (сам придумал).
+6. Скрипт казармы (BarrackSpawner)
+7. Скрипт области куда идут лучники (

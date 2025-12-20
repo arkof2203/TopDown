@@ -32,10 +32,14 @@ namespace Netologia.TowerDefence.Behaviors
 
 		[SerializeField]
 		private Tower[] _prefabs;
+        [SerializeField]
+        private Tower _barrackPrefab;
 
-		public event Func<int, bool> OnTryGoldChanged; 
+        public event Func<int, bool> OnTryGoldChanged;
+        private bool IsBarrack(Tower t) => t != null && t.GetComponent<BarrackSpawner>() != null;
 
-		private void OnSelectCellHandler(SelectCell obj)
+
+        private void OnSelectCellHandler(SelectCell obj)
 		{
 			if(_hasSelect)
 				_current.Unselect();
@@ -71,11 +75,12 @@ namespace Netologia.TowerDefence.Behaviors
 
 		private void OnUpgradeTower()
 		{
-			var tower = _current.Tower;
+            if (IsBarrack(_current.Tower)) return;
+            var tower = _current.Tower;
 			if (OnTryGoldChanged.Invoke(-tower.Progress[tower.Level].Cost))
 			{
 				_current.Tower.LevelUp();
-				OnSelectCellHandler(_current);//rewrite interface
+				OnSelectCellHandler(_current);
 				_upgradeButton.interactable = _current.Tower.CanLevelUp;
 			}
 		}
@@ -86,28 +91,53 @@ namespace Netologia.TowerDefence.Behaviors
 			if (OnTryGoldChanged.Invoke(-_prefabs[index].Progress[0].Cost))
 			{
 				var tower = _towers[_prefabs[index]].Get;
-				_current.SetTower(tower);
+                tower.transform.localScale = Vector3.one;
+                _current.SetTower(tower);
 			
 				OnCloseBuildPanel();
 			}
 		}
 
-		private void OnSellTower()
-		{
-			var tower = _current.Tower;
-			var value = 0;
-			for (int i = 0, iMax = tower.Level; i <= iMax; i++)
-				value += tower.Progress[i].Cost;
+        private void OnCreateBarrack()
+        {
+            if (_barrackPrefab == null) return;
 
-			OnTryGoldChanged.Invoke(Mathf.RoundToInt(value * _constants.SellPercent));
-			_current.RemoveTower();
-			
-			value = Array.FindIndex(_prefabs, t => t.AttackElemental == tower.AttackElemental);
-			_towers[_prefabs[value]].ReturnElement(tower);
-			OnCloseBuildPanel();
-		}
-		
-		private void Awake()
+            if (OnTryGoldChanged.Invoke(-_barrackPrefab.Progress[0].Cost))
+            {
+                var barrack = _towers[_barrackPrefab].Get;
+                barrack.transform.localScale = Vector3.one;
+                _current.SetTower(barrack);                  
+                OnCloseBuildPanel();
+            }
+        }
+
+
+        private void OnSellTower()
+        {
+            var tower = _current.Tower;
+
+            var value = 0;
+            for (int i = 0, iMax = tower.Level; i <= iMax; i++)
+                value += tower.Progress[i].Cost;
+
+            OnTryGoldChanged.Invoke(Mathf.RoundToInt(value * _constants.SellPercent));
+            _current.RemoveTower();
+
+            if (IsBarrack(tower))
+            {
+                _towers[_barrackPrefab].ReturnElement(tower);
+            }
+            else
+            {
+                int idx = Array.FindIndex(_prefabs, t => t.AttackElemental == tower.AttackElemental);
+                _towers[_prefabs[idx]].ReturnElement(tower);
+            }
+
+            OnCloseBuildPanel();
+        }
+
+
+        private void Awake()
 		{
 			_cells = FindObjectsOfType<SelectCell>();
 			for (int i = 0, iMax = _cells.Length; i < iMax; i++)
@@ -117,9 +147,11 @@ namespace Netologia.TowerDefence.Behaviors
 			_upgradeButton.onClick.AddListener(OnUpgradeTower);
 			_sellButton.onClick.AddListener(OnSellTower);
 			_buyTowerPanel.OnBuyTowerHandler += OnCreateTower;
+            _buyTowerPanel.OnBuyBarrackHandler += OnCreateBarrack;
 
-			_buyTowerPanel.SetTowerParams(_prefabs);
-		}
+            _buyTowerPanel.SetTowerParams(_prefabs);
+            _buyTowerPanel.SetBarrackParams(_barrackPrefab);
+        }
 
 		
 
@@ -132,7 +164,8 @@ namespace Netologia.TowerDefence.Behaviors
 			_upgradeButton.onClick.RemoveListener(OnUpgradeTower);
 			_sellButton.onClick.RemoveListener(OnSellTower);
 			_buyTowerPanel.OnBuyTowerHandler -= OnCreateTower;
-		}
+            _buyTowerPanel.OnBuyBarrackHandler -= OnCreateBarrack;
+        }
 
 		[Inject]
 		private void Construct(TowerSystem towers, Constants constants)

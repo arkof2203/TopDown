@@ -41,8 +41,9 @@ namespace Netologia.TowerDefence.Behaviors
 		private Constants _constants;
 		
 		public static Director Instance { get; private set; }
+        public ProjectileSystem Projectiles => _projectiles;
 
-		private void Update()
+        private void Update()
 		{
 			if (!TimeManager.IsGame) return;
 			TimeManager.IncrementDeltaTime();

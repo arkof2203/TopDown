@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6506293993511442635}
   - component: {fileID: 6683565733345573527}
+  - component: {fileID: 5463357800032163533}
+  - component: {fileID: 4652149426503182381}
   m_Layer: 0
   m_Name: Barrack
   m_TagString: Untagged
@@ -26,10 +28,11 @@ Transform:
   m_GameObject: {fileID: 2202726877175207670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.0991535, y: -1.7751904, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4116369520083629960}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6683565733345573527
@@ -72,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 559192293, guid: 6057a9025d441bc408490b9b883cc556, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -83,4 +86,72 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
+--- !u!114 &5463357800032163533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202726877175207670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db15f199ec444878970ed3e77aec351d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Progress>k__BackingField:
+  - Damage: 0
+    AttackDelay: 10
+    Range: 0
+    Cost: 10
+  <AttackElemental>k__BackingField: 8
+  <Projectile>k__BackingField: {fileID: 0}
+  <AttackEffect>k__BackingField: {fileID: 0}
+  <AttackSound>k__BackingField: {fileID: 0}
+  _rangeBack: {fileID: 6683565733345573527}
+--- !u!114 &4652149426503182381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202726877175207670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5695e631254822419b4258c622d0b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _archerPrefab: {fileID: 4770144435984146113, guid: 4d1c39762b1d77c4ebd20c384e44e3bf, type: 3}
+  _spawnPoint: {fileID: 4116369520083629960}
+  _maxAliveArchers: 10
+--- !u!1 &8504753363130785467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4116369520083629960}
+  m_Layer: 0
+  m_Name: Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4116369520083629960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8504753363130785467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.007, y: -0.263, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6506293993511442635}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

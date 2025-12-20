@@ -25,7 +25,8 @@ namespace Netologia.TowerDefence
 			Tower = tower;
 			HasTower = true;
 			tower.transform.position = transform.position;
-		}
+            tower.transform.localScale = Vector3.one;
+        }
 
 		public void RemoveTower()
 		{
