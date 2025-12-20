@@ -4,4 +4,5 @@
 4. Лучники тоже от сюда - https://free-game-assets.itch.io/free-archer-towers-pixel-art-for-tower-defense
 5. Добавил вступление в игру, маленький сюжет начальной игры (сам придумал).
 6. Скрипт казармы (BarrackSpawner)
-7. Скрипт области куда идут лучники (
+7. Скрипт области куда идут лучники (ArcherArea)
+8. Скрипт лучников (ArcherAI)
